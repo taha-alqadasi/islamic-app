@@ -1,0 +1,385 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+    --primary-color: #3b82f6;
+    --primary-color-rgb: 59, 130, 246;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom font for Quran text */
+@font-face {
+  font-family: "Quran";
+  src: url("/fonts/UthmanicHafs.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-quran {
+  font-family: "Quran", "Traditional Arabic", serif;
+}
+
+/* RTL support */
+html[dir="rtl"] .rtl\:space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+/* Verse highlight animation */
+@keyframes verse-highlight {
+  0% {
+    background-color: rgba(var(--primary-color-rgb), 0.3);
+  }
+  100% {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+  }
+}
+
+.verse-highlight {
+  animation: verse-highlight 2s ease-out;
+}
+
+/* Word by word translation styles */
+.word-by-word {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4px;
+  position: relative;
+}
+
+.word-by-word:hover .word-translation {
+  visibility: visible;
+  opacity: 1;
+}
+
+.word-translation {
+  position: absolute;
+  bottom: -24px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Audio visualizer styles */
+.audio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  height: 50px;
+  width: 100%;
+  gap: 2px;
+}
+
+.audio-bar {
+  flex: 1;
+  background-color: var(--primary-color);
+  border-radius: 2px 2px 0 0;
+  transition: height 0.1s ease;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .font-quran {
+    font-size: 20px !important;
+  }
+
+  .quran-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quran-player-compact {
+    padding: 8px !important;
+  }
+}
+
+/* تعريف متغيرات الألوان للثيمات */
+:root {
+  --bg-image: none;
+  --bg-overlay: transparent;
+  --font-family: "Noto Naskh Arabic", "Amiri", serif;
+}
+
+/* أنماط RTL عامة */
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* تحسين الوضع الليلي */
+.dark-theme {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 18, 18, 18;
+  color-scheme: dark;
+}
+
+/* تطبيق الخلفية المخصصة */
+body {
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  font-family: var(--font-family);
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-overlay);
+  z-index: -1;
+}
+
+/* تحسين قراءة النصوص العربية */
+.arabic-text {
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* تحسين الأيقونات في الوضع الليلي */
+.dark-theme .lucide-icon {
+  stroke-width: 2;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+}
+
+/* تحسين التباين العالي */
+.high-contrast {
+  --foreground-rgb: 255, 255, 255;
+  --background-rgb: 0, 0, 0;
+}
+
+.high-contrast .card,
+.high-contrast .button,
+.high-contrast .input {
+  border-width: 2px;
+}
+
+/* تنسيق النصوص القرآنية */
+.quran-text {
+  font-family: "Amiri", "Noto Naskh Arabic", serif;
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+
+/* تأثيرات الحركة */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--primary-color-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-color-rgb), 0);
+  }
+}
+
+.animations-enabled .pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+  }
+  50% {
+    background-color: rgba(var(--primary-color-rgb), 0.3);
+  }
+  100% {
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+  }
+}
+
+.animations-enabled .highlight-animation {
+  animation: highlight 2s infinite;
+}
+
+/* تحسين عرض الأزرار والعناصر التفاعلية */
+.animations-enabled button,
+.animations-enabled .button,
+.animations-enabled .interactive-element {
+  transition: all 0.2s ease;
+}
+
+/* تحسين عرض شريط التمرير */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dark-theme::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+.dark-theme::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+.dark-theme::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* حجم النص الكبير */
+.large-text {
+  font-size: 1.125rem !important;
+}
+
+.large-text h1 {
+  font-size: 2.25rem !important;
+}
+
+.large-text h2 {
+  font-size: 1.875rem !important;
+}
+
+.large-text h3 {
+  font-size: 1.5rem !important;
+}
+
+.large-text .quran-text {
+  font-size: 1.5rem !important;
+}
+
+/* تحسينات الوضع الليلي للقرآن */
+.dark-theme .quran-text {
+  color: #f8f8f8;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.03em;
+}
+
+.dark-theme .verse-container {
+  background-color: rgba(30, 30, 30, 0.7);
+  border-color: rgba(60, 60, 60, 0.7);
+}
+
+.dark-theme .verse-container:hover {
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+.dark-theme .icon-button {
+  color: rgba(200, 200, 200, 0.8);
+  background-color: rgba(50, 50, 50, 0.7);
+}
+
+.dark-theme .icon-button:hover {
+  background-color: rgba(70, 70, 70, 0.8);
+}
+
+/* تحسينات الوضع الليلي للأذكار */
+.dark-theme .dhikr-card {
+  background-color: rgba(30, 30, 30, 0.8);
+  border-color: rgba(60, 60, 60, 0.8);
+}
+
+.dark-theme .dhikr-text {
+  color: #f0f0f0;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .dhikr-source {
+  color: rgba(180, 180, 180, 0.9);
+}
+
+.dark-theme .dhikr-fadl {
+  color: rgba(200, 200, 200, 0.9);
+}
+
+/* تحسينات الألوان الديناميكية */
+.primary-bg {
+  background-color: var(--primary-color);
+}
+
+.primary-text {
+  color: var(--primary-color);
+}
+
+.primary-border {
+  border-color: var(--primary-color);
+}
+
+.primary-shadow {
+  box-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.3);
+}
+
